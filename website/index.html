@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forma 3D — Engineering CAD that works with you</title>
+<meta name="description" content="Create and modify parametric CAD designs through natural language while keeping dimensions, constraints, and geometry editable.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}p||((p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",p.onerror=function(){p=null},(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r));var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="du vu fu pu yu init Bu Hu Nu qu Vu Kl ju Zu Ou Yu Xu th capture getExtension zu hu nh calculateEventProperties ih register register_once register_for_session unregister unregister_for_session ah Lu sh getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync uh identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset hh shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty rh Ku createPersonProfile setInternalOrTestUser oh bu opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Qu debug Yl Os getPageViewId captureTraceFeedback captureTraceMetric Pu".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_BY23i9WY2n7wn4jked5NkDZT2S8yewnipjddfy86FkWX', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+    })
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #0f172a;
+    background: #ffffff;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { color: #1d4ed8; }
+  button { font-family: inherit; cursor: pointer; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+  /* nav */
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+
+  /* hero */
+  .hero-grid { display: grid; grid-template-columns: 460px 1fr; gap: 56px; align-items: center; }
+  .hero-ticks { display: flex; flex-wrap: wrap; gap: 20px; }
+
+  /* mockup panes */
+  .mockup-body { display: flex; }
+  .mockup-tree { width: 148px; flex: none; }
+  .mockup-ai { width: 236px; flex: none; }
+  .mockup-center { flex: 1 1 auto; min-width: 0; }
+
+  /* feature strip */
+  .grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+
+  /* workflows */
+  .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+
+  /* process */
+  .steps-row { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 20px; align-items: start; }
+  .step-arrow { display: flex; }
+
+  /* testimonial */
+  .testi-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+  .stats-row { display: flex; gap: 36px; }
+  .stat-item { display: flex; align-items: center; gap: 12px; }
+
+  /* cta */
+  .cta-grid { display: grid; grid-template-columns: 1fr 360px; gap: 40px; align-items: center; }
+  .cta-ticks { display: flex; flex-wrap: wrap; gap: 20px; }
+
+  /* footer */
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .mockup-tree { display: none; }
+    .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid3 { grid-template-columns: 1fr; }
+    .steps-row { grid-template-columns: 1fr; }
+    .step-arrow { transform: rotate(90deg); justify-content: center; margin: -4px auto; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .cta-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  }
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .mockup-ai { display: none; }
+    h1.hero-h1 { font-size: 36px !important; line-height: 1.15 !important; }
+  }
+  @media (max-width: 560px) {
+    .grid4 { grid-template-columns: 1fr; }
+    .stats-row { flex-wrap: wrap; row-gap: 16px; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<div style="border-bottom:1px solid #e7ebf1;">
+  <div class="container" style="height:72px; display:flex; align-items:center; justify-content:space-between;">
+    <div style="display:flex; align-items:center; gap:9px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2 L22 21 H2 Z" fill="#2563eb"/><path d="M12 9 L17 19 H7 Z" fill="#ffffff"/></svg>
+      <span style="font-weight:800; font-size:18px; letter-spacing:-0.01em;">Forma <span style="color:#2563eb;">3D</span></span>
+    </div>
+    <div class="nav-links">
+      <div style="display:flex; align-items:center; gap:5px; font-size:14.5px; font-weight:500; color:#334155;">Product
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div style="display:flex; align-items:center; gap:5px; font-size:14.5px; font-weight:500; color:#334155;">Use Cases
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div style="font-size:14.5px; font-weight:500; color:#334155;">Pricing</div>
+      <div style="display:flex; align-items:center; gap:5px; font-size:14.5px; font-weight:500; color:#334155;">Resources
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="#">Log in</a>
+      <button onclick="posthog.capture('join_waitlist_clicked', { location: 'nav' })" style="background:#2563eb; color:#fff; border:none; padding:10px 18px; border-radius:8px; font-size:14.5px; font-weight:600;">Join Waitlist</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<div class="container" style="padding-top:64px; padding-bottom:72px;">
+  <div class="hero-grid">
+    <div>
+      <h1 class="hero-h1" style="font-size:47px; line-height:1.12; font-weight:800; letter-spacing:-0.02em; margin:0 0 20px;">Engineering CAD that works with you.</h1>
+      <p style="font-size:17px; line-height:1.6; color:#475569; margin:0 0 28px; max-width:440px;">Create and modify parametric designs through natural language while keeping dimensions, constraints, and geometry editable.</p>
+      <div style="display:flex; gap:12px; margin-bottom:24px;">
+        <button onclick="posthog.capture('join_waitlist_clicked', { location: 'hero' })" style="background:#2563eb; color:#fff; border:none; padding:13px 22px; border-radius:9px; font-size:15px; font-weight:600;">Join Waitlist</button>
+        <button onclick="posthog.capture('watch_demo_clicked', { location: 'hero' })" style="background:#fff; color:#0f172a; border:1.5px solid #dbe1ea; padding:13px 22px; border-radius:9px; font-size:15px; font-weight:600; display:flex; align-items:center; gap:9px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2"><circle cx="12" cy="12" r="9.5"/><path d="M10 8.5l6 3.5-6 3.5z" fill="#0f172a" stroke="none"/></svg>
+          Watch Demo
+        </button>
+      </div>
+      <form style="display:flex; gap:10px; margin-bottom:16px; max-width:440px;" onsubmit="posthog.capture('early_access_submitted', { location: 'hero' }); return false;">
+        <input required type="email" placeholder="Enter your work email" style="flex:1; min-width:0; padding:13px 16px; border-radius:9px; border:1.5px solid #dbe1ea; font-size:14.5px; font-family:inherit; color:#0f172a;">
+        <button type="submit" style="background:#2563eb; color:#fff; border:none; padding:0 20px; border-radius:9px; font-size:14.5px; font-weight:600; white-space:nowrap;">Get Early Access</button>
+      </form>
+      <div class="hero-ticks">
+        <span style="display:flex; align-items:center; gap:7px; font-size:13px; color:#475569;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Be the first to try
+        </span>
+        <span style="display:flex; align-items:center; gap:7px; font-size:13px; color:#475569;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          No credit card required
+        </span>
+        <span style="display:flex; align-items:center; gap:7px; font-size:13px; color:#475569;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Built for engineers
+        </span>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px; margin-top:36px;">
+        <div style="width:28px; height:1.5px; background:#2563eb;"></div>
+        <span style="font-size:12px; font-weight:700; letter-spacing:0.14em; color:#64748b;">TURN IDEAS INTO REAL ENGINEERING.</span>
+      </div>
+    </div>
+
+    <!-- product mockup -->
+    <div style="border:1px solid #e2e8f0; border-radius:14px; overflow:hidden; box-shadow:0 20px 50px -20px rgba(15,23,42,0.25); background:#fff;">
+      <div style="height:42px; background:#f8fafc; border-bottom:1px solid #e7ebf1; display:flex; align-items:center; padding:0 14px; gap:10px;">
+        <div style="display:flex; gap:6px;">
+          <div style="width:9px; height:9px; border-radius:50%; background:#f87171;"></div>
+          <div style="width:9px; height:9px; border-radius:50%; background:#fbbf24;"></div>
+          <div style="width:9px; height:9px; border-radius:50%; background:#4ade80;"></div>
+        </div>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="margin-left:6px;"><path d="M12 2 L22 21 H2 Z" fill="#2563eb"/><path d="M12 9 L17 19 H7 Z" fill="#ffffff"/></svg>
+        <span style="font-size:12.5px; font-weight:700;">Forma 3D</span>
+        <div style="flex:1;"></div>
+        <div style="display:flex; gap:10px; color:#94a3b8;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><circle cx="12" cy="8" r=".6" fill="currentColor" stroke="none"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="12" r="2.2"/><circle cx="17" cy="6" r="2.2"/><circle cx="17" cy="18" r="2.2"/><path d="M9 11l6-4M9 13l6 4"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div style="width:22px; height:22px; border-radius:50%; background:#2563eb; color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-left:6px;">JD</div>
+      </div>
+
+      <div class="mockup-body">
+        <!-- tree -->
+        <div class="mockup-tree" style="border-right:1px solid #eef1f5; padding:12px 12px;">
+          <div style="display:flex; gap:14px; font-size:12px; font-weight:600; margin-bottom:12px; color:#94a3b8;">
+            <span style="color:#0f172a; border-bottom:2px solid #2563eb; padding-bottom:6px;">Model</span>
+            <span style="padding-bottom:6px;">Design History</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:#0f172a; margin-bottom:10px;">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2"><path d="M21 8V7a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h5"/></svg>
+            Enclosure v3
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" style="margin-left:auto;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:9px; font-size:11px;">
+            <div style="display:flex; align-items:center; gap:6px; color:#334155; font-weight:600;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg> Origin
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:6px; color:#334155; font-weight:600;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M4 20L20 4M4 4h16v16"/></svg> Sketch1
+              </div>
+              <div style="color:#94a3b8; margin-left:16px; font-size:10px;">(Base Profile)</div>
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:6px; color:#334155; font-weight:600;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M4 9h16"/></svg> Extrude1
+              </div>
+              <div style="color:#94a3b8; margin-left:16px; font-size:10px;">(3 mm)</div>
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:6px; color:#334155; font-weight:600;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M4 20V8a4 4 0 014-4h12"/></svg> Fillet1
+              </div>
+              <div style="color:#94a3b8; margin-left:16px; font-size:10px;">(2 mm)</div>
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:6px; color:#334155; font-weight:600;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><circle cx="6" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg> Hole Pattern1
+              </div>
+              <div style="color:#94a3b8; margin-left:16px; font-size:10px;">(4x M4)</div>
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:6px; color:#334155; font-weight:600;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1.5"/><rect x="8" y="8" width="8" height="8" rx="1" stroke-dasharray="2 2"/></svg> Shell1
+              </div>
+              <div style="color:#94a3b8; margin-left:16px; font-size:10px;">(3 mm)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D viewport -->
+        <div class="mockup-center" style="position:relative; padding:10px; background:#fdfdfe;">
+          <svg viewBox="0 0 430 380" style="width:100%; height:auto; display:block;">
+            <!-- top face -->
+            <polygon points="190,90 363,190 242,260 69,160" fill="#eef1f6" stroke="#94a3b8" stroke-width="1.4"/>
+            <!-- right face -->
+            <polygon points="363,190 242,260 242,350 363,280" fill="#d7dee8" stroke="#94a3b8" stroke-width="1.4"/>
+            <!-- front face -->
+            <polygon points="69,160 242,260 242,350 69,250" fill="#c3ccd9" stroke="#94a3b8" stroke-width="1.4"/>
+            <!-- interior cavity -->
+            <polygon points="195,107 334,187 237,243 98,163" fill="#b6c0d0" stroke="#8996aa" stroke-width="1.1"/>
+            <!-- mounting holes -->
+            <circle cx="194" cy="103" r="6.5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.3"/>
+            <circle cx="341" cy="188" r="6.5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.3"/>
+            <circle cx="238" cy="247" r="6.5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.3"/>
+            <circle cx="91" cy="162" r="6.5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.3"/>
+
+            <!-- dimension: length 120mm -->
+            <line x1="52" y1="288" x2="225" y2="388" stroke="#2563eb" stroke-width="1.2"/>
+            <line x1="52" y1="282" x2="52" y2="294" stroke="#2563eb" stroke-width="1.2"/>
+            <line x1="225" y1="382" x2="225" y2="394" stroke="#2563eb" stroke-width="1.2"/>
+            <rect x="98" y="322" width="82" height="16" fill="#fdfdfe"/>
+            <text x="139" y="334" text-anchor="middle" font-size="12" fill="#1d4ed8" font-family="Inter, sans-serif" font-weight="600">120.00 mm</text>
+
+            <!-- dimension: depth 80mm -->
+            <line x1="280" y1="368" x2="401" y2="298" stroke="#2563eb" stroke-width="1.2"/>
+            <line x1="280" y1="362" x2="280" y2="374" stroke="#2563eb" stroke-width="1.2"/>
+            <line x1="401" y1="292" x2="401" y2="304" stroke="#2563eb" stroke-width="1.2"/>
+            <rect x="315" y="315" width="72" height="16" fill="#fdfdfe"/>
+            <text x="351" y="327" text-anchor="middle" font-size="12" fill="#1d4ed8" font-family="Inter, sans-serif" font-weight="600">80.00 mm</text>
+
+            <!-- wall thickness leader -->
+            <line x1="10" y1="235" x2="66" y2="222" stroke="#64748b" stroke-width="1.1"/>
+            <circle cx="66" cy="222" r="2" fill="#64748b"/>
+            <text x="8" y="215" font-size="11.5" fill="#334155" font-family="Inter, sans-serif" font-weight="600">Wall thickness</text>
+            <text x="8" y="230" font-size="11.5" fill="#334155" font-family="Inter, sans-serif" font-weight="600">3.00 mm</text>
+
+            <!-- hole callout leader -->
+            <line x1="303" y1="55" x2="200" y2="98" stroke="#64748b" stroke-width="1.1"/>
+            <circle cx="200" cy="98" r="2" fill="#64748b"/>
+            <text x="301" y="42" text-anchor="end" font-size="11.5" fill="#334155" font-family="Inter, sans-serif" font-weight="600">4 x &#216;4.20</text>
+            <text x="301" y="56" text-anchor="end" font-size="11.5" fill="#334155" font-family="Inter, sans-serif" font-weight="600">(M4 clearance)</text>
+
+            <!-- axis gizmo -->
+            <g transform="translate(30,352)">
+              <line x1="0" y1="0" x2="22" y2="0" stroke="#ef4444" stroke-width="2"/>
+              <text x="26" y="4" font-size="10" fill="#ef4444" font-weight="700" font-family="Inter, sans-serif">X</text>
+              <line x1="0" y1="0" x2="-14" y2="-14" stroke="#22c55e" stroke-width="2"/>
+              <text x="-24" y="-14" font-size="10" fill="#22c55e" font-weight="700" font-family="Inter, sans-serif">Y</text>
+              <line x1="0" y1="0" x2="0" y2="-22" stroke="#3b82f6" stroke-width="2"/>
+              <text x="-4" y="-27" font-size="10" fill="#3b82f6" font-weight="700" font-family="Inter, sans-serif">Z</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- AI assistant -->
+        <div class="mockup-ai" style="border-left:1px solid #eef1f5; padding:12px; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#2563eb"><path d="M12 2l1.8 5.6L19 9l-5.2 1.4L12 16l-1.8-5.6L5 9l5.2-1.4z"/></svg>
+            AI Assistant
+            <span style="margin-left:auto; color:#94a3b8; font-weight:400;">&#8942;</span>
+          </div>
+          <div style="background:#eef2f7; border-radius:10px 10px 2px 10px; padding:9px 11px; font-size:11px; line-height:1.5; color:#334155;">
+            Increase this wall thickness to 3 mm and add four M4 mounting holes symmetrically around the center.
+          </div>
+          <div style="background:#eff6ff; border:1px solid #dbeafe; border-radius:10px; padding:10px 11px;">
+            <div style="display:flex; gap:6px; align-items:flex-start; font-size:11px; font-weight:700; color:#1d4ed8; margin-bottom:6px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" style="margin-top:1px; flex:none;"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+              Updated the model:
+            </div>
+            <ul style="margin:0; padding-left:16px; font-size:10.5px; line-height:1.6; color:#334155;">
+              <li>Wall thickness set to 3 mm</li>
+              <li>Added four M4 mounting holes symmetrically around the center</li>
+              <li>Maintained all constraints and parametric links</li>
+            </ul>
+            <div style="margin-top:8px; border:1px solid #dbeafe; border-radius:8px; overflow:hidden; background:#fff;">
+              <svg viewBox="0 0 430 380" style="width:70px; height:auto; display:block; margin:6px auto;">
+                <polygon points="190,90 363,190 242,260 69,160" fill="#eef1f6" stroke="#94a3b8" stroke-width="2.5"/>
+                <polygon points="363,190 242,260 242,350 363,280" fill="#d7dee8" stroke="#94a3b8" stroke-width="2.5"/>
+                <polygon points="69,160 242,260 242,350 69,250" fill="#c3ccd9" stroke="#94a3b8" stroke-width="2.5"/>
+              </svg>
+            </div>
+          </div>
+          <div style="margin-top:auto; display:flex; gap:6px; align-items:center; border:1.5px solid #e2e8f0; border-radius:9px; padding:6px 6px 6px 10px;">
+            <span style="font-size:10.5px; color:#94a3b8; flex:1;">Ask a follow-up...</span>
+            <div style="width:22px; height:22px; border-radius:6px; background:#2563eb; display:flex; align-items:center; justify-content:center; flex:none;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FEATURE STRIP ============ -->
+<div class="container" style="padding-bottom:88px;">
+  <div class="grid4">
+    <div style="border:1px solid #e7ebf1; border-radius:12px; padding:22px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:14px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <div style="font-size:15.5px; font-weight:700; margin-bottom:6px;">Automate repetitive modeling</div>
+      <div style="font-size:13.5px; color:#64748b; line-height:1.55;">Let AI handle tedious geometry updates and repeated edits.</div>
+    </div>
+    <div style="border:1px solid #e7ebf1; border-radius:12px; padding:22px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:14px;"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+      <div style="font-size:15.5px; font-weight:700; margin-bottom:6px;">Edit features through natural language</div>
+      <div style="font-size:13.5px; color:#64748b; line-height:1.55;">Describe a change and update the model instantly.</div>
+    </div>
+    <div style="border:1px solid #e7ebf1; border-radius:12px; padding:22px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:14px;"><path d="M12 3l9 16H3z"/><circle cx="12" cy="8" r="1.1" fill="#2563eb" stroke="none"/><circle cx="6.5" cy="17.5" r="1.1" fill="#2563eb" stroke="none"/><circle cx="17.5" cy="17.5" r="1.1" fill="#2563eb" stroke="none"/></svg>
+      <div style="font-size:15.5px; font-weight:700; margin-bottom:6px;">Preserve dimensions and constraints</div>
+      <div style="font-size:13.5px; color:#64748b; line-height:1.55;">Keep engineering intent intact while iterating.</div>
+    </div>
+    <div style="border:1px solid #e7ebf1; border-radius:12px; padding:22px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:14px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+      <div style="font-size:15.5px; font-weight:700; margin-bottom:6px;">Export standard CAD formats</div>
+      <div style="font-size:13.5px; color:#64748b; line-height:1.55;">Move seamlessly into existing engineering workflows.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ WORKFLOWS ============ -->
+<div class="container" style="padding-bottom:96px;">
+  <div style="text-align:center; max-width:640px; margin:0 auto 48px;">
+    <h2 style="font-size:32px; font-weight:800; letter-spacing:-0.01em; margin:0 0 12px;">Built for precise engineering workflows</h2>
+    <p style="font-size:15.5px; color:#64748b; margin:0;">AI-native tools designed around how mechanical engineers actually work.</p>
+  </div>
+  <div class="grid3">
+    <div>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:14px;"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
+      <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Parametric edits</div>
+      <div style="font-size:13.5px; color:#64748b; line-height:1.6;">Make design changes with natural language while keeping your model fully parametric and editable.</div>
+    </div>
+    <div>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:14px;"><path d="M12 3l9 16H3z"/><circle cx="12" cy="8" r="1.1" fill="#2563eb" stroke="none"/><circle cx="6.5" cy="17.5" r="1.1" fill="#2563eb" stroke="none"/><circle cx="17.5" cy="17.5" r="1.1" fill="#2563eb" stroke="none"/></svg>
+      <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Constraint-aware geometry</div>
+      <div style="font-size:13.5px; color:#64748b; line-height:1.6;">AI understands engineering constraints, relationships, and design intent.</div>
+    </div>
+    <div>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:14px;"><path d="M12 2l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5"/></svg>
+      <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Versioned design iterations</div>
+      <div style="font-size:13.5px; color:#64748b; line-height:1.6;">Explore ideas, compare iterations, and revert anytime &mdash; without losing your work.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PROCESS ============ -->
+<div style="background:#f5f7fa; padding:88px 0;">
+  <div class="container">
+    <div style="text-align:center; max-width:640px; margin:0 auto 52px;">
+      <h2 style="font-size:32px; font-weight:800; letter-spacing:-0.01em; margin:0 0 12px;">From idea to editable model</h2>
+      <p style="font-size:15.5px; color:#64748b; margin:0;">Go from a concept to a fully parametric, editable CAD model in minutes.</p>
+    </div>
+
+    <div class="steps-row">
+      <!-- step 1 -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div style="width:26px; height:26px; border-radius:50%; background:#2563eb; color:#fff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center;">1</div>
+          <div style="font-size:15.5px; font-weight:700;">Describe, sketch, or upload</div>
+        </div>
+        <div style="font-size:13px; color:#64748b; margin:0 0 16px 36px; line-height:1.5;">Use natural language, a sketch, or an existing file to get started.</div>
+        <div style="background:#fff; border:1px solid #e7ebf1; border-radius:12px; padding:16px;">
+          <svg viewBox="0 0 160 160" style="width:100%; max-width:160px; display:block; margin:0 auto 12px;">
+            <line x1="80" y1="10" x2="80" y2="150" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="10" y1="80" x2="150" y2="80" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 3"/>
+            <circle cx="80" cy="80" r="58" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+            <circle cx="80" cy="80" r="22" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+            <circle cx="80" cy="26" r="4.5" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+            <circle cx="122" cy="52" r="4.5" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+            <circle cx="122" cy="108" r="4.5" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+            <circle cx="80" cy="134" r="4.5" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+            <circle cx="38" cy="108" r="4.5" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+            <circle cx="38" cy="52" r="4.5" fill="none" stroke="#2563eb" stroke-width="1.6"/>
+          </svg>
+          <div style="background:#f8fafc; border:1px solid #eef1f5; border-radius:8px; padding:9px 11px; font-size:11.5px; color:#334155; line-height:1.5; margin-bottom:10px;">"A 100 mm diameter flange with a 20 mm bore and six mounting holes"</div>
+          <div style="display:flex; gap:6px;">
+            <div style="flex:1; text-align:center; border:1px solid #e2e8f0; border-radius:7px; padding:6px 0; font-size:11px; font-weight:600; color:#334155;">T &nbsp;Text</div>
+            <div style="flex:1; text-align:center; border:1px solid #e2e8f0; border-radius:7px; padding:6px 0; font-size:11px; font-weight:600; color:#334155;">&#9998; &nbsp;Sketch</div>
+            <div style="flex:1; text-align:center; border:1px solid #e2e8f0; border-radius:7px; padding:6px 0; font-size:11px; font-weight:600; color:#334155;">&#8593; &nbsp;Upload</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-arrow" style="align-items:center; justify-content:center; padding-top:60px;">
+        <svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h24M19 2l6 6-6 6"/></svg>
+      </div>
+
+      <!-- step 2 -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div style="width:26px; height:26px; border-radius:50%; background:#2563eb; color:#fff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center;">2</div>
+          <div style="font-size:15.5px; font-weight:700;">Generate and refine with AI</div>
+        </div>
+        <div style="font-size:13px; color:#64748b; margin:0 0 16px 36px; line-height:1.5;">Get a parametric model you can quickly iterate on.</div>
+        <div style="background:#fff; border:1px solid #e7ebf1; border-radius:12px; padding:16px;">
+          <svg viewBox="0 0 160 160" style="width:100%; max-width:160px; display:block; margin:0 auto 12px;">
+            <defs>
+              <radialGradient id="flangeShade" cx="35%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#eef1f6"/>
+                <stop offset="100%" stop-color="#c3ccd9"/>
+              </radialGradient>
+            </defs>
+            <circle cx="80" cy="80" r="58" fill="url(#flangeShade)" stroke="#94a3b8" stroke-width="1.4"/>
+            <circle cx="80" cy="80" r="22" fill="#fdfdfe" stroke="#94a3b8" stroke-width="1.4"/>
+            <circle cx="80" cy="26" r="5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.2"/>
+            <circle cx="122" cy="52" r="5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.2"/>
+            <circle cx="122" cy="108" r="5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.2"/>
+            <circle cx="80" cy="134" r="5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.2"/>
+            <circle cx="38" cy="108" r="5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.2"/>
+            <circle cx="38" cy="52" r="5" fill="#fdfdfe" stroke="#64748b" stroke-width="1.2"/>
+          </svg>
+          <div style="display:flex; flex-direction:column; gap:7px;">
+            <div style="display:flex; align-items:center; gap:8px; border:1px solid #e2e8f0; border-radius:7px; padding:7px 10px; font-size:11.5px; color:#334155;">
+              <span style="width:12px; height:12px; border-radius:50%; border:1.6px solid #94a3b8; flex:none;"></span> Add a 2 mm chamfer
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; border:1px solid #e2e8f0; border-radius:7px; padding:7px 10px; font-size:11.5px; color:#334155;">
+              <span style="width:12px; height:12px; border-radius:50%; border:1.6px solid #94a3b8; flex:none;"></span> Change to 6 holes
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; border:1px solid #e2e8f0; border-radius:7px; padding:7px 10px; font-size:11.5px; color:#334155;">
+              <span style="width:12px; height:12px; border-radius:50%; border:1.6px solid #94a3b8; flex:none;"></span> Set the bolt circle to 80 mm
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-arrow" style="align-items:center; justify-content:center; padding-top:60px;">
+        <svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h24M19 2l6 6-6 6"/></svg>
+      </div>
+
+      <!-- step 3 -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div style="width:26px; height:26px; border-radius:50%; background:#2563eb; color:#fff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center;">3</div>
+          <div style="font-size:15.5px; font-weight:700;">Export and engineer further</div>
+        </div>
+        <div style="font-size:13px; color:#64748b; margin:0 0 16px 36px; line-height:1.5;">Download in your preferred format and continue in your workflow.</div>
+        <div style="background:#fff; border:1px solid #e7ebf1; border-radius:12px; padding:16px;">
+          <svg viewBox="0 0 430 380" style="width:100%; max-width:160px; display:block; margin:0 auto 12px;">
+            <polygon points="190,90 363,190 242,260 69,160" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <polygon points="363,190 242,260 242,350 363,280" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <polygon points="69,160 242,260 242,350 69,250" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="5 4"/>
+          </svg>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="display:flex; align-items:center; gap:9px;">
+              <div style="width:24px; height:24px; border-radius:6px; background:#2563eb; color:#fff; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;">STP</div>
+              <span style="font-size:11.5px; font-weight:600;">STEP</span><span style="font-size:11px; color:#94a3b8;">.step</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:9px;">
+              <div style="width:24px; height:24px; border-radius:6px; background:#dc2626; color:#fff; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;">SW</div>
+              <span style="font-size:11.5px; font-weight:600;">SolidWorks</span><span style="font-size:11px; color:#94a3b8;">.sldprt</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:9px;">
+              <div style="width:24px; height:24px; border-radius:6px; background:#f97316; color:#fff; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;">F</div>
+              <span style="font-size:11.5px; font-weight:600;">Fusion 360</span><span style="font-size:11px; color:#94a3b8;">.f3d</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:9px;">
+              <div style="width:24px; height:24px; border-radius:6px; background:#0d9488; color:#fff; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;">X_T</div>
+              <span style="font-size:11.5px; font-weight:600;">Parasolid</span><span style="font-size:11px; color:#94a3b8;">.x_t</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:9px;">
+              <div style="width:24px; height:24px; border-radius:6px; background:#64748b; color:#fff; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;">IGS</div>
+              <span style="font-size:11.5px; font-weight:600;">IGES</span><span style="font-size:11px; color:#94a3b8;">.igs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TESTIMONIAL ============ -->
+<div class="container" style="padding:88px 0;">
+  <div class="testi-grid">
+    <div style="display:flex; gap:20px; align-items:flex-start;">
+      <div style="width:56px; height:56px; border-radius:50%; background:#dbeafe; color:#1d4ed8; font-size:18px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;">PS</div>
+      <div>
+        <svg width="26" height="20" viewBox="0 0 32 24" fill="#cbd5e1" style="margin-bottom:6px;"><path d="M0 24V14.5Q0 7 4 3.5T13 0v5Q9 6 7 8.5T5 14h5v10H0zm17 0V14.5Q17 7 21 3.5T30 0v5Q26 6 24 8.5T22 14h5v10H17z"/></svg>
+        <p style="font-size:19px; font-weight:600; line-height:1.5; margin:0 0 12px; color:#1e293b;">"This feels like the first AI tool that actually understands how engineers work &mdash; fast, but still precise."</p>
+        <div style="font-size:13.5px; color:#64748b;">Priya S., Mechanical Design Engineer</div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span style="font-size:13px; font-weight:600; color:#334155; max-width:90px; line-height:1.35;">Saves hours of repetitive work</span>
+      </div>
+      <div class="stat-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="#2563eb"/></svg>
+        <span style="font-size:13px; font-weight:600; color:#334155; max-width:80px; line-height:1.35;">Keeps full control</span>
+      </div>
+      <div class="stat-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><path d="M12 2l8 3.5v6c0 5-3.4 8.7-8 10.5-4.6-1.8-8-5.5-8-10.5v-6z"/></svg>
+        <span style="font-size:13px; font-weight:600; color:#334155; max-width:90px; line-height:1.35;">Feels built for engineers</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESERVE CTA ============ -->
+<div style="background:#eef2f7; padding:80px 0;">
+  <div class="container">
+    <div class="cta-grid">
+      <div>
+        <h2 style="font-size:30px; font-weight:800; letter-spacing:-0.01em; margin:0 0 12px;">Reserve early access</h2>
+        <p style="font-size:15.5px; color:#64748b; margin:0 0 26px; max-width:440px;">Join the waitlist or place a refundable $25 deposit to get priority onboarding.</p>
+        <div style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
+          <button onclick="posthog.capture('join_waitlist_clicked', { location: 'reserve_cta' })" style="background:#2563eb; color:#fff; border:none; padding:13px 22px; border-radius:9px; font-size:15px; font-weight:600;">Join Waitlist</button>
+          <button onclick="posthog.capture('reserve_deposit_clicked', { location: 'reserve_cta' })" style="background:#fff; color:#0f172a; border:1.5px solid #cbd5e1; padding:13px 22px; border-radius:9px; font-size:15px; font-weight:600;">Reserve with $25 Deposit</button>
+        </div>
+        <div class="cta-ticks">
+          <span style="display:flex; align-items:center; gap:7px; font-size:13px; color:#475569;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Priority access
+          </span>
+          <span style="display:flex; align-items:center; gap:7px; font-size:13px; color:#475569;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Early feature updates
+          </span>
+          <span style="display:flex; align-items:center; gap:7px; font-size:13px; color:#475569;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            100% refundable
+          </span>
+        </div>
+      </div>
+      <div style="position:relative; height:220px; display:flex; align-items:center; justify-content:center;">
+        <svg viewBox="0 0 430 300" style="width:100%; height:auto;">
+          <line x1="0" y1="0" x2="430" y2="0" stroke="#dbe1ea" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="0" y1="60" x2="430" y2="60" stroke="#dbe1ea" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="60" y1="0" x2="60" y2="300" stroke="#dbe1ea" stroke-width="1" stroke-dasharray="4 4"/>
+          <polygon points="180,50 353,150 232,220 59,120" fill="#dbe1ea" stroke="#94a3b8" stroke-width="1.4"/>
+          <polygon points="353,150 232,220 232,270 353,200" fill="#c3ccd9" stroke="#94a3b8" stroke-width="1.4"/>
+          <polygon points="59,120 232,220 232,270 59,170" fill="#aab4c4" stroke="#94a3b8" stroke-width="1.4"/>
+          <circle cx="184" cy="67" r="5" fill="#f4f6f9" stroke="#64748b" stroke-width="1"/>
+          <circle cx="331" cy="148" r="5" fill="#f4f6f9" stroke="#64748b" stroke-width="1"/>
+          <circle cx="228" cy="207" r="5" fill="#f4f6f9" stroke="#64748b" stroke-width="1"/>
+          <circle cx="81" cy="122" r="5" fill="#f4f6f9" stroke="#64748b" stroke-width="1"/>
+          <text x="20" y="288" font-family="'Segoe Script','Comic Sans MS',cursive" font-size="15" fill="#2563eb" transform="rotate(-6 20 288)">SAME ENGINEERS,</text>
+          <text x="30" y="305" font-family="'Segoe Script','Comic Sans MS',cursive" font-size="15" fill="#2563eb" transform="rotate(-6 30 305)">BRIGHTER TOOLS.</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<div style="border-top:1px solid #e7ebf1; padding:56px 0 28px;">
+  <div class="container">
+    <div class="footer-grid" style="margin-bottom:40px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:9px; margin-bottom:10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2 L22 21 H2 Z" fill="#2563eb"/><path d="M12 9 L17 19 H7 Z" fill="#ffffff"/></svg>
+          <span style="font-weight:800; font-size:16px;">Forma <span style="color:#2563eb;">3D</span></span>
+        </div>
+        <div style="font-size:13px; color:#64748b; line-height:1.5;">A more capable tomorrow,<br>built by engineers.</div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:14px;">Product</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:13.5px;"><a href="#">Features</a><a href="#">Use Cases</a><a href="#">Pricing</a><a href="#">Roadmap</a></div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:14px;">Company</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:13.5px;"><a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a><a href="#">Brand</a></div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:14px;">Contact</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:13.5px; color:#334155;"><span>hello@forma3d.ai</span><span>Support</span><span>Press</span></div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; border-top:1px solid #eef1f5; padding-top:22px;">
+      <div style="font-size:12.5px; color:#94a3b8;">&copy; 2026 Forma 3D. All rights reserved.</div>
+      <div style="display:flex; gap:14px; color:#475569;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H22l-7.6 8.7L23 21h-6.9l-5.4-6.7L4.4 21H1.3l8.1-9.3L1 3h7l4.9 6.1zM17.6 19h1.7L7 5h-1.9z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12s0-3.4-.4-5a2.8 2.8 0 00-2-2C17.9 4.5 12 4.5 12 4.5s-5.9 0-7.6.5a2.8 2.8 0 00-2 2C2 8.6 2 12 2 12s0 3.4.4 5a2.8 2.8 0 002 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.8 2.8 0 002-2c.4-1.6.4-5 .4-5zM10 15.5v-7l6 3.5z"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
